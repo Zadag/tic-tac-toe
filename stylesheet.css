@@ -18,13 +18,12 @@ h1 {
 .game-select {
     height: 3vh;
     width: 17vh;
-    margin-left: 3vh;
     background-color: rgb(160, 128, 70);
     font-size: 1.5vh;
 }
 
 .gameboard {
-    margin-top: 6vh;
+    margin-top: 3vh;
     height: 50vh;
     width: 50vh;
     display: grid;
@@ -36,12 +35,58 @@ h1 {
 }
 
 .game-square {
-    flex: flex-grow;
+    display: flex;
     background-color: black;
+    color: white;
+    font-size: 8vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.game-type-buttons {
+    display: flex;
+    justify-content: space-between;
 }
 
 #new-game-button {
     height: 8vh;
     width: 12vh;
-    margin-top: 6vh;
+    margin-top: 3vh;
+}
+
+.player-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.x-or-o {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 75%;
+    margin-top: -10px;
+}
+
+p {
+    color: whitesmoke;
+    font-size: 24px;
+}
+
+#x {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70%;
+    width: 30%;
+    font-size: 2vh;
+}
+
+#o {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70%;
+    width: 30%;
+    font-size: 2vh;
 }
