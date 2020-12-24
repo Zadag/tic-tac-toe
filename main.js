@@ -1,12 +1,14 @@
 const game = (() => {
     const gameboard = {
-        gameSquares : ["0", "1", "2", 
-                       "3", "4", "5", 
-                       "6", "7", "8"]
+        gameSquares : ["", "", "", 
+                       "", "", "", 
+                       "", "", ""]
     }
 
+    let playerArray = [];
+
     const isMoveValid = (square) => {
-        gameboard.gameSquares[square].length < 1 ? true: false
+        return gameboard.gameSquares[square].length < 1 ? true: false
     }
 
     const changeSquare = (square, symbol) => {
@@ -24,7 +26,7 @@ const game = (() => {
                 return gameboard.gameSquares[a]
             } 
             //check for 3 in a column
-            else if(isSquareEmpty(a) === false && gameboard.gameSquares[b] === gameboard.gameSquares[b + 3] && gameboard.gameSquares[b + 3] === gameboard.gameSquares[b + 6]){
+            else if(isSquareEmpty(b) === false && gameboard.gameSquares[b] === gameboard.gameSquares[b + 3] && gameboard.gameSquares[b + 3] === gameboard.gameSquares[b + 6]){
                 return gameboard.gameSquares[b]
             }
             a += 3;
@@ -39,29 +41,92 @@ const game = (() => {
         }
     }
 
-    //const isDrawn = () => {
-    //   const fullBoard = () => {
-    //        gameboard.gameSquares.forEach(gameSquare => gameSquare.length < 1 ? true: false);
+    const resetBoard = () => gameboard.gameSquares = ["", "", "", 
+                                                      "", "", "", 
+                                                      "", "", "",];
 
-    //    }
-    //    if(typeof isWon() === 'undefined' && fullBoard){
-    //  } 
-    //    }
 
+    const isDrawn = () => {
+        const fullBoard = () => {
+            let isFull = true;
+            gameboard.gameSquares.forEach(gameSquare => {
+                if(gameSquare.length < 1) {
+                    isFull = false;
+            }
+        }) 
+            return isFull;
+        }
+        //console.log(typeof isWon());
+        if(typeof isWon() === 'undefined' && fullBoard() === true){
+            return true;
+        } 
+        return false;
+    }
+
+    const playerFactory = (playerID, symbol, isTurnNow) => {
+        return {playerID, symbol, isTurnNow}
+    } 
+
+    let player1 = playerFactory('p1', 'x', false);
+    let player2 = playerFactory('p2', 'o', false);
+    playerArray.push(player1);
+    playerArray.push(player2); 
+    
+    const playTurn = (chosenSquare) => {
+        console.log(isWon());
+        console.log(isDrawn());
+        console.log(isMoveValid(chosenSquare));
+        if(!isWon() && !isDrawn() && isMoveValid(chosenSquare)){
+            if(playerArray[0].isTurnNow === true){
+                changeSquare(chosenSquare, playerArray[0].symbol);
+                playerArray[0].isTurnNow = false;
+                playerArray[1].isTurnNow = true;
+            }else {
+                changeSquare(chosenSquare, playerArray[1].symbol);
+                playerArray[1].isTurnNow = false;
+                playerArray[0].isTurnNow = true;
+            }
+        }else console.log('playTurn failed');
+    }
 
     return {
-        isMoveValid, changeSquare, isWon, gameboard
+        isMoveValid, changeSquare, isWon, isDrawn, resetBoard, playTurn, playerArray, gameboard
     }
 })();
 
 const controller = (() => {
     const squares = document.querySelectorAll(".game-square");
     Array.from(squares).forEach(square => {
-        square.addEventListener('click', () =>{
+        square.addEventListener('click', () => {
             const chosenSquare = square.getAttribute("data-square");
-            if(game.isMoveValid(chosenSquare) === true) playRound()
+            game.playTurn(chosenSquare);
+            display.updateBoard();
             
         })
+    })
+
+    const playerSelection = document.querySelector(".x-or-o");
+    playerSelection.addEventListener('click', (e) => {
+        game.playerArray[0].symbol = e.target.id;
+        if(game.playerArray[0].symbol === 'x'){
+            game.playerArray[0].isTurnNow = true;
+            game.playerArray[1].symbol = 'o';
+            game.playerArray[1].isTurnNow = false;
+            console.log(game.playerArray[1]);
+            console.log(game.playerArray[0]);
+        }else {
+            game.playerArray[1].symbol = 'x'
+            game.playerArray[1].isTurnNow = true;
+            game.playerArray[0].isTurnNow = false;
+            console.log(game.playerArray[1]);
+            console.log(game.playerArray[0]);
+        }
+    })
+
+    const newGameButton = document.querySelector('#new-game-button');
+    newGameButton.addEventListener('click', () => {
+        game.resetBoard();
+        display.updateBoard();
     })
 
 })();
@@ -78,13 +143,6 @@ const display = (() => {
 
 
 
-
-const playerFactory = (humanOrComp, playerID, symbol) => {
-    return {humanOrComp, playerID, symbol}
-} 
-
-
-
 //Game module (gameboard)
 //-Get move from controller
 //-Check if the move is valid 
@@ -92,20 +150,19 @@ const playerFactory = (humanOrComp, playerID, symbol) => {
 //-Update gameboard array
 //-Deterimine if the game is over
 //-Send gameboard to controller
-//- 
+//-Create player objects 
 //-
 
 //Display module
-//-Get board state from controller
-//-Push gameboard updates to the controller
+//-Get board state from controller and update DOM
+//-
 //-
 //-
 //-
 //-
 //-
 
-//Controller module
-//-Create player objects 
+//Controller module 
 //-Get moves 
 //-Send player names and moves to the game module
 //-
