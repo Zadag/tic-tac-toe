@@ -55,41 +55,9 @@ h1 {
     background-color:rgb(160, 128, 70)
 }
 
-.player-info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.x-or-o {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 75%;
-    margin-top: -10px;
-}
-
 p {
     color: whitesmoke;
     font-size: 24px;
-}
-
-#x {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 70%;
-    width: 30%;
-    font-size: 2vh;
-}
-
-#o {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 70%;
-    width: 30%;
-    font-size: 2vh;
 }
 
 .game {

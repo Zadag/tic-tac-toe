@@ -118,24 +118,6 @@ const controller = (() => {
         });
     });
 
-    const playerSelection = document.querySelector(".x-or-o");
-    playerSelection.addEventListener('click', (e) => {
-        game.playerArray[0].symbol = e.target.id;
-        if(game.playerArray[0].symbol === 'x'){
-            game.playerArray[0].isTurnNow = true;
-            game.playerArray[1].symbol = 'o';
-            game.playerArray[1].isTurnNow = false;
-            console.log(game.playerArray[1]);
-            console.log(game.playerArray[0]);
-        }else {
-            game.playerArray[1].symbol = 'x'
-            game.playerArray[1].isTurnNow = true;
-            game.playerArray[0].isTurnNow = false;
-            console.log(game.playerArray[1]);
-            console.log(game.playerArray[0]);
-        }
-    })
-
     const newGameButton = document.querySelector('#new-game-button');
     newGameButton.addEventListener('click', () => {
         game.resetBoard();
