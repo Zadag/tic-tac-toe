@@ -52,6 +52,7 @@ h1 {
     height: 8vh;
     width: 12vh;
     margin-top: 3vh;
+    background-color:rgb(160, 128, 70)
 }
 
 .player-info {
@@ -89,4 +90,19 @@ p {
     height: 70%;
     width: 30%;
     font-size: 2vh;
+}
+
+.game {
+    display: flex;
+    justify-content: space-evenly;
+    width: 90vw;
+}
+
+input {
+    background-color: rgb(114, 86, 86);
+    height: 5vh;
+    width: 12vh;
+    border-radius: 25%;
+    text-align: center;
+    border: none;
 }

@@ -76,7 +76,7 @@ const game = (() => {
         console.log(isWon());
         console.log(isDrawn());
         console.log(isMoveValid(chosenSquare));
-        if(!isWon() && !isDrawn() && isMoveValid(chosenSquare)){
+        if(!isGameOver(chosenSquare)){
             if(playerArray[0].isTurnNow === true){
                 changeSquare(chosenSquare, playerArray[0].symbol);
                 playerArray[0].isTurnNow = false;
@@ -86,15 +86,28 @@ const game = (() => {
                 playerArray[1].isTurnNow = false;
                 playerArray[0].isTurnNow = true;
             }
-        }else console.log('playTurn failed');
+        }else return "game over";
+    }
+
+    const whosTurn = () => {
+        if(playerArray[0].isTurnNow === true) {
+            return playerArray[0].symbol
+        }else return playerArray[1].symbol
+    }
+
+    const isGameOver = (square) => {
+        if(!isWon() && !isDrawn() && isMoveValid(square)){
+            return false
+        }else return true
     }
 
     return {
-        isMoveValid, changeSquare, isWon, isDrawn, resetBoard, playTurn, playerArray, gameboard
+        changeSquare, resetBoard, playTurn, isGameOver, playerArray, gameboard
     }
 })();
 
 const controller = (() => {
+
     const squares = document.querySelectorAll(".game-square");
     Array.from(squares).forEach(square => {
         square.addEventListener('click', () => {
@@ -102,8 +115,8 @@ const controller = (() => {
             game.playTurn(chosenSquare);
             display.updateBoard();
             
-        })
-    })
+        });
+    });
 
     const playerSelection = document.querySelector(".x-or-o");
     playerSelection.addEventListener('click', (e) => {
@@ -138,6 +151,7 @@ const display = (() => {
             gameSquares[i].textContent = game.gameboard.gameSquares[i]
         } 
     }
+
     return {updateBoard}
 })();
 
