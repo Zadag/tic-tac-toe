@@ -49,9 +49,10 @@ h1 {
 }
 
 #new-game-button {
+    position: absolute;
+    top: 85vh;
     height: 8vh;
     width: 12vh;
-    margin-top: 3vh;
     background-color:rgb(160, 128, 70)
 }
 

@@ -56,7 +56,7 @@ const game = (() => {
         }) 
             return isFull;
         }
-        //console.log(typeof isWon());
+        
         if(typeof isWon() === 'undefined' && fullBoard() === true){
             return true;
         } 
@@ -86,7 +86,7 @@ const game = (() => {
                 playerArray[1].isTurnNow = false;
                 playerArray[0].isTurnNow = true;
             }
-        }else return "game over";
+        }
     }
 
     const whosTurn = () => {
@@ -134,42 +134,10 @@ const display = (() => {
         } 
     }
 
-    return {updateBoard}
+    const announce = (player, symbol) => {
+        const announcer = document.querySelector('.announceer');
+        announcer.textContent = '${player} won playing as ${symbol}'
+    }
+
+    return {updateBoard, announce}
 })();
-
-
-
-//Game module (gameboard)
-//-Get move from controller
-//-Check if the move is valid 
-//-Determine whos turn it is 
-//-Update gameboard array
-//-Deterimine if the game is over
-//-Send gameboard to controller
-//-Create player objects 
-//-
-
-//Display module
-//-Get board state from controller and update DOM
-//-
-//-
-//-
-//-
-//-
-//-
-
-//Controller module 
-//-Get moves 
-//-Send player names and moves to the game module
-//-
-//-
-//-
-
-
-//Things left to do
-//-
-//-
-//-
-//-
-//-
-//-
