@@ -8,6 +8,11 @@ const game = (() => {
     let playerArray = [];
     let winner = '';
 
+    const whoWon = () => {
+        if(isWon() && playerArray[0].isTurnNow === true) return playerArray[0].playerID;
+        if(isWon() && playerArray[1].isTurnNow === true) return playerArray[1].playerID;
+    }
+
     const isMoveValid = (square) => {
         return gameboard.gameSquares[square].length < 1 ? true: false
     }
@@ -110,7 +115,7 @@ const game = (() => {
     }
 
     return {
-        changeSquare, resetBoard, playTurn, isGameOver, isWon, playerArray, gameboard, winner
+        changeSquare, resetBoard, playTurn, isGameOver, isWon, whoWon, playerArray, gameboard, winner
     }
 })();
 
@@ -131,6 +136,8 @@ const controller = (() => {
     newGameButton.addEventListener('click', () => {
         game.resetBoard();
         display.updateBoard();
+        display.resetAnnounce();
+
     })
 
     const player1ID = document.querySelector('#player1')
@@ -152,13 +159,16 @@ const display = (() => {
         } 
     }
 
+    const announcer = document.querySelector('.announcer');
     const announce = () => {
-        const announcer = document.querySelector('.announcer');
-
         if (game.isWon()){
-            announcer.textContent = `${game.winner} won playing as ${game.isWon()}`
+            announcer.textContent = `${game.whoWon()} won playing as ${game.isWon()}`
         }
     }
 
-    return {updateBoard, announce}
+    const resetAnnounce = () => {
+        announcer.textContent = '';
+    }
+
+    return {updateBoard, announce, resetAnnounce}
 })();
