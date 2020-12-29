@@ -4,7 +4,7 @@ const game = (() => {
                        "", "", "", 
                        "", "", ""]
     }
-
+    let winner = "";
     let playerArray = [];
 
     const isMoveValid = (square) => {
@@ -81,12 +81,19 @@ const game = (() => {
                 changeSquare(chosenSquare, playerArray[0].symbol);
                 playerArray[0].isTurnNow = false;
                 playerArray[1].isTurnNow = true;
+                if(isWon()){
+                    winner = playerArray[0].symbol;
+                }
             }else {
                 changeSquare(chosenSquare, playerArray[1].symbol);
                 playerArray[1].isTurnNow = false;
                 playerArray[0].isTurnNow = true;
+                if(isWon()){
+                    winner = playerArray[1].symbol;
+                }
             }
         }
+
     }
 
     const whosTurn = () => {
@@ -102,7 +109,7 @@ const game = (() => {
     }
 
     return {
-        changeSquare, resetBoard, playTurn, isGameOver, playerArray, gameboard
+        changeSquare, resetBoard, playTurn, isGameOver, isWon, playerArray, gameboard, winner
     }
 })();
 
@@ -114,6 +121,7 @@ const controller = (() => {
             const chosenSquare = square.getAttribute("data-square");
             game.playTurn(chosenSquare);
             display.updateBoard();
+            display.announce();
             
         });
     });
@@ -134,9 +142,12 @@ const display = (() => {
         } 
     }
 
-    const announce = (player, symbol) => {
-        const announcer = document.querySelector('.announceer');
-        announcer.textContent = '${player} won playing as ${symbol}'
+    const announce = () => {
+        const announcer = document.querySelector('.announcer');
+
+        if (game.isWon()){
+            announcer.textContent = `${game.winner} won playing as ${game.isWon()}`
+        }
     }
 
     return {updateBoard, announce}
