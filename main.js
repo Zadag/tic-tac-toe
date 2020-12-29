@@ -4,8 +4,9 @@ const game = (() => {
                        "", "", "", 
                        "", "", ""]
     }
-    let winner = "";
+
     let playerArray = [];
+    let winner = '';
 
     const isMoveValid = (square) => {
         return gameboard.gameSquares[square].length < 1 ? true: false
@@ -132,6 +133,15 @@ const controller = (() => {
         display.updateBoard();
     })
 
+    const player1ID = document.querySelector('#player1')
+    const player2ID = document.querySelector('#player2')
+
+    player1ID.addEventListener('input', () => {
+        game.playerArray[0].playerID = player1ID.value;
+    })
+    player2ID.addEventListener('input', () => {
+        game.playerArray[1].playerID = player2ID.value;
+    })
 })();
 
 const display = (() => {
