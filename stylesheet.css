@@ -75,3 +75,9 @@ input {
     text-align: center;
     border: none;
 }
+
+.player-name {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

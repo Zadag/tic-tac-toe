@@ -106,7 +106,7 @@ const game = (() => {
     }
 
     return {
-        changeSquare, resetBoard, playTurn, isGameOver, isWon, whoWon, playerArray, gameboard, winner
+        changeSquare, resetBoard, playTurn, isGameOver, isWon, isDrawn, whoWon, playerArray, gameboard, winner
     }
 })();
 
@@ -154,8 +154,11 @@ const display = (() => {
 
     const announcer = document.querySelector('.announcer');
     const announce = () => {
-        if (game.isWon()){
+        if(game.isWon()){
             announcer.textContent = `${game.whoWon()} won playing as ${game.isWon()}`
+        }
+        if(game.isDrawn()){
+            announcer.textContent = "Nobody won. It's a tie!"
         }
     }
 
