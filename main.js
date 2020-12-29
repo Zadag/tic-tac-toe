@@ -9,8 +9,8 @@ const game = (() => {
     let winner = '';
 
     const whoWon = () => {
-        if(isWon() && playerArray[0].isTurnNow === true) return playerArray[0].playerID;
-        if(isWon() && playerArray[1].isTurnNow === true) return playerArray[1].playerID;
+        if(isWon() && playerArray[0].isTurnNow === false) return playerArray[0].playerID;
+        if(isWon() && playerArray[1].isTurnNow === false) return playerArray[1].playerID;
     }
 
     const isMoveValid = (square) => {
@@ -73,15 +73,12 @@ const game = (() => {
         return {playerID, symbol, isTurnNow}
     } 
 
-    let player1 = playerFactory('p1', 'x', false);
+    let player1 = playerFactory('p1', 'x', true);
     let player2 = playerFactory('p2', 'o', false);
     playerArray.push(player1);
     playerArray.push(player2); 
     
     const playTurn = (chosenSquare) => {
-        console.log(isWon());
-        console.log(isDrawn());
-        console.log(isMoveValid(chosenSquare));
         if(!isGameOver(chosenSquare)){
             if(playerArray[0].isTurnNow === true){
                 changeSquare(chosenSquare, playerArray[0].symbol);
@@ -100,12 +97,6 @@ const game = (() => {
             }
         }
 
-    }
-
-    const whosTurn = () => {
-        if(playerArray[0].isTurnNow === true) {
-            return playerArray[0].symbol
-        }else return playerArray[1].symbol
     }
 
     const isGameOver = (square) => {
@@ -135,6 +126,8 @@ const controller = (() => {
     const newGameButton = document.querySelector('#new-game-button');
     newGameButton.addEventListener('click', () => {
         game.resetBoard();
+        game.playerArray[0].isTurnNow = true;
+        game.playerArray[1].isTurnNow = false;
         display.updateBoard();
         display.resetAnnounce();
 
